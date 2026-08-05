@@ -1,0 +1,27 @@
+# SPDX-FileCopyrightText: 2026 AerynOS Developers
+# SPDX-License-Identifier: MPL-2.0
+
+name        : yggdrasil
+version     : 0.5.14
+release     : 1
+homepage    : https://github.com/yggdrasil-network/yggdrasil-go
+upstreams   :
+    - https://github.com/yggdrasil-network/yggdrasil-go/archive/refs/tags/v0.5.14.tar.gz: afed8dd1002b322eef51f1869cab19d96b3774eba1339b5f4088b85d1f8acd0a
+summary     : Scalable routing as an encrypted IPv6 overlay network
+description : |
+    Yggdrasil is an early-stage implementation of a fully end-to-end encrypted IPv6 network.
+    It is lightweight, self-arranging, supported on multiple platforms and allows pretty much
+    any IPv6-capable application to communicate securely with other Yggdrasil nodes.
+license     :  LGPL-3.0-only
+builddeps   :
+    - binary(go)
+networking  : true
+build       : |
+    ./build
+install     : |
+    %install_bin yggdrasil yggdrasilctl
+
+    %install_file %(pkgdir)/yggdrasil.group %(installroot)%(libdir)/userdb/yggdrasil.group
+    ln -s yggdrasil.group %(installroot)%(libdir)/userdb/444.group
+
+    %install_file contrib/systemd/yggdrasil.service %(installroot)%(libdir)/systemd/system/yggdrasil.service
